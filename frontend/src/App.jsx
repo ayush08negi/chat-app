@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
-import {Routes,Route} from 'react-router-dom'
+import {Routes,Route, Navigate} from 'react-router-dom'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Setting from './pages/Setting'
@@ -12,7 +12,7 @@ import Home from './pages/Home'
 import {Loader} from 'lucide-react'
 
 const App = () => {
-  const {authUser, checkAuth} = useAuthStore()
+  const {authUser, checkAuth, isCheckingAuth} = useAuthStore()
 
   useEffect(() =>{
     checkAuth()
@@ -31,11 +31,11 @@ const App = () => {
 
      <Navbar/>
      <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/signup" element={<Signup/>}/>
-      <Route path="login" element={<Login/>}/>
+      <Route path="/" element={ authUser ?  <Home/> : <Navigate to="/login" />}/>
+      <Route path="/signup" element={!authUser ?  <Signup/> : <Navigate to="/"/> }/>
+      <Route path="login" element={!authUser ? <Login/> : <Navigate to="/"/>}/>
       <Route path="settings" element={<Setting/>}/>
-      <Route path="profile" element={<Profile/>}/>
+      <Route path="profile"  element={ authUser ?  <Profile/> : <Navigate to="/login" />}/>
 
      </Routes>
 
