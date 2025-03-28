@@ -2,7 +2,6 @@ import React from 'react'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import {Routes,Route, Navigate} from 'react-router-dom'
-import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Setting from './pages/Setting'
 import Profile from './pages/Profile'
@@ -10,6 +9,8 @@ import { axiosInstance } from './lib/axios'
 import { useAuthStore } from './store/useAuthStore'
 import Home from './pages/Home'
 import {Loader} from 'lucide-react'
+import {Toaster} from 'react-hot-toast'
+import Signup from './pages/Signup'
 
 const App = () => {
   const {authUser, checkAuth, isCheckingAuth} = useAuthStore()
@@ -36,9 +37,10 @@ const App = () => {
       <Route path="login" element={!authUser ? <Login/> : <Navigate to="/"/>}/>
       <Route path="settings" element={<Setting/>}/>
       <Route path="profile"  element={ authUser ?  <Profile/> : <Navigate to="/login" />}/>
-
      </Routes>
 
+    <Toaster/>
+    
     </div>
   )
 }
