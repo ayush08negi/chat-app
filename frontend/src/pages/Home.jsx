@@ -1,9 +1,14 @@
-import React from 'react'
+// import React from 'react'
+// import { useChatStore } from '../store/useChatStore'
 
-const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+// const Home = () => {
+//   const { selectedUser } = useChatStore();
 
-export default Home
+//   return (
+//     <div className=''>
+
+//     </div>
+//   )
+// }
+
+// export default Home
