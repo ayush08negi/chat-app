@@ -21,7 +21,7 @@ const Sidebar = () => {
   if (isUsersLoading) return <SidebarSkeleton />;
 
   // console.log("fileter",filteredUsers)
-  console.log("users",users);
+  // console.log("users",users);
 
   return (
     <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
