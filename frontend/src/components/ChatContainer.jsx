@@ -8,24 +8,19 @@ import { formatMessageTime } from '../lib/utils';
 
 
 const ChatContainer = () => {
-  const { messages, getMessages, isMessagesLoading, selectedUser } = useChatStore();
+  const { messages, getMessages, isMessagesLoading, selectedUser, subscribeToMessage ,unsubscribeFromMessages} = useChatStore();
   const { authUser } = useAuthStore();
+  const messageEndRef = useRef(null)
 
   // console.log("messages",messages)
 
   useEffect(() => {
     getMessages(selectedUser._id);
-  }, [selectedUser._id, getMessages])
+    subscribeToMessage();
 
-  if (isMessagesLoading) {
-    return (
-      <div className='flex-1 flex flex-col overflow-auto'>
-        <ChatHeader />
-        <MessageSkeleton />
-        <MessageInput />
-      </div>
-    )
-  }
+    return () => unsubscribeFromMessages();
+  }, [selectedUser._id, getMessages,subscribeToMessage, unsubscribeFromMessages])
+
 
   return (
     <div className='flex-1 flex flex-col overflow-auto'>
@@ -34,7 +29,8 @@ const ChatContainer = () => {
       <div className='flex-1 overflow-y-auto p-4 space-y-4'>
         {messages.map((message) => (
           <div key={message._id} 
-               className={`chat ${message.senderId === authUser._id ? "chat-end" : " chat-start"}`}> 
+               className={`chat ${message.senderId === authUser._id ? "chat-end" : " chat-start"}`}
+               ref = {messageEndRef} > 
             <div className='chat-image avatar'>
               <div className='size-10 rounded-full border'>
                 <img
